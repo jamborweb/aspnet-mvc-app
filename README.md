@@ -4,6 +4,6 @@ jScore is a ASP.NET MVC5 application which presents data about sports clubs, sta
 
 For this project I used:
 
- Markup : * ASP.NET MVC5
-          * Entity Framework
+* ASP.NET MVC5
+* Entity Framework
 
