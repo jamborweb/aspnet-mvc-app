@@ -1,0 +1,134 @@
+﻿
+@model PagedList.IPagedList<jScore3.Models.Zawodnik>
+@using System.Data.Entity.Infrastructure
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<div class="jumbotron myjumbotron">
+    <h2>Zawodnicy</h2>
+    <lead>Oto lista zawodników. Aby dowiedzieć się więcej o piłkarzu, kliknij w "Profil"!</lead>
+</div>s
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Dodaj zawodnika", "Create", null, null, new { @class = "btn btn-success" })
+    </p>
+}
+
+@using (Html.BeginForm("Index", "Zawodniks", FormMethod.Get))
+{
+    <p>
+        Szukaj po nazwisku: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Szukaj" class="btn btn-default btn-sm"/>
+    </p>
+}
+
+
+@{int i = 0;}
+@foreach (var item in Model)
+{
+    
+    if (i % 3 == 0)
+    {
+        @:<div class="row">
+   
+    }
+    @*<div class="col-md-4">@Html.DisplayFor(modelItem => item.Imie)</div>*@
+    
+    <div class="col-md-4">
+            <div class="panel panel-default mypanel1">
+                <div class="panel-heading mypanel2">
+                    <h1 class="panel-title pull-left">@Html.DisplayFor(modelItem => item.Imie) @Html.DisplayFor(modelItem => item.Nazwisko)</h1>
+                    <div class="btn-group pull-right">
+
+                        @*<a href="@Url.Action("Details", "Zawodniks", new {id = item.Id})" class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Profil
+                        </a>*@
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a href="@Url.Action("Details", "Zawodniks", new {id = item.Id})" class="btn btn-warning btn-xs">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profil
+                            </a>
+                            <a href="@Url.Action("Edit", "Zawodniks", new {id = item.Id})" class="btn btn-info btn-xs">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edycja
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", "Zawodniks", new {id = item.Id})" class="btn btn-warning btn-xs">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profil
+                            </a>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- end panel-heading -->
+                <div class="panel-body">
+                    <p>
+                        @if (File.Exists(Server.MapPath("~/Images/Zawodnicy/" + Html.DisplayFor(modelItem => item.Zdjecie))))
+                        {
+                            <a href="@Url.Action("Details", "Zawodniks", new { Id= item.Id})"><img src="~/Images/Zawodnicy/@item.Zdjecie" alt="" class="img-responsive img-thumbnail center-block img-zawodnik" /></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", "Zawodniks", new { Id= item.Id})"><img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive img-thumbnail center-block img-zawodnik-brak"/></a>
+                        }
+                    </p>
+                    <div class="row">
+                        <div class="col-lg-6 infoklub">
+                            <p class="napis">Klub</p>
+                        </div>
+                        <div class="col-lg-6 infonumer">
+                            <p class="napis">Numer koszulki</p>
+                        </div>
+                        @*<div class="clearfix"></div>*@
+                        <div class="col-lg-6 infoklubContent">
+                            <p class="napis">@Html.DisplayFor(modelItem => item.Klub.Nazwa)</p>
+                            @*<p class="napis">
+                            @if (File.Exists(Server.MapPath("~/Images/Herby/" + Html.DisplayFor(modelItem => item.Klub.Herb))))
+                            {
+                                <img src="~/Images/Herby/@item.Klub.Herb" alt="" class="img-responsive img-thumbnail center-block img-herb-zawodnik"/>
+                            }
+                            else
+                            {
+                                <img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive"/>
+                            }
+                        </p>*@
+                        </div>
+                        <div class="col-lg-6 infonumerContent">
+                            <p class="numerkoszulki">@Html.DisplayFor(modelItem => item.NumerKoszulki)</p>
+                        </div>
+                    </div>
+                    @*<p class="text-left lead2">Apoyamos estratégicamente la presencia de tu empresa en el mundo digital, a través de la construcción de recursos web atractivos para tus clientes.</p>
+                <ul class="text-left">
+                    <li>Data Mining</li>
+                </ul>*@
+                    @*<p>
+                    <a class="btn btn-primary" href="#">Ver más »</a>
+                </p>*@
+
+                </div>
+                <!-- end panel-body -->
+            </div>
+        <!-- end panel-primary -->
+    </div>
+    if (i % 3 == 2)
+    {
+        @:</div>
+    }
+    i++;
+}
+<div class="clearfix"></div>
+
+<button onclick="goBack()" class="btn btn-primary">Wstecz</button>
+<br />
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

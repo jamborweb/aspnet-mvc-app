@@ -1,0 +1,137 @@
+﻿@model jScore3.Models.Zawodnik
+
+@{
+    ViewBag.Title = "Usuwanie";
+}
+
+<div class="jumbotron myjumbotron">
+    <h2>@ViewData.Model.Imie @ViewData.Model.Nazwisko</h2>
+    <h3 style="font-weight: bold;">Czy jesteś pewien, że chcesz <span style="color: red;">usunąć</span> profil tego zawodnika?</h3>
+</div>
+
+
+<div class="row">
+    <div class="col-md-7">
+        <h4>Klub</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Klub.Nazwa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Klub.Nazwa)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.Imie)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Imie)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.Nazwisko)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nazwisko)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.KrajPochodzenia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.KrajPochodzenia)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.DataUrodzenia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DataUrodzenia)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.Wzrost)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Wzrost) cm
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.Waga)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Waga) kg
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.NumerKoszulki)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumerKoszulki)
+            </dd>
+            <hr />
+        </dl>
+    </div>
+    <div class="col-md-5">
+        <h4>Zdjęcie</h4>
+        <hr />
+
+        @if (File.Exists(Server.MapPath("~/Images/Zawodnicy/" + Html.DisplayFor(model => model.Zdjecie))))
+        {
+            <img src="~/Images/Zawodnicy/@Model.Zdjecie" alt="" class="img-responsive img-thumbnail center-block" />
+        }
+        else
+        {
+            <img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive" />
+        }
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <p>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="pull-left">
+                    @Html.ActionLink("Powrót do listy", "Index", null, null, new { @class = "btn btn-warning" })
+                </div>
+                <div class="pull-right">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Usuń zawodnika" class="btn btn-danger" />
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="pull-left">
+                    @Html.ActionLink("Powrót do listy", "Index", null, null, new { @class = "btn btn-warning" })
+                </div>
+            }
+        </p>
+    </div>
+</div>
+
+
+
+@*@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}*@

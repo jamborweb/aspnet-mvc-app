@@ -1,0 +1,135 @@
+﻿@using System.Web.Mvc.Html
+@using jScore3.Models
+@model jScore3.Models.Mecz
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
+
+<div class="row belka">
+    <div class="col-md-3">
+        Kolejka: @Html.DisplayFor(model => model.Kolejka)
+    </div>
+    <div class="col-md-3">
+        Data: @Html.DisplayFor(model => model.Data)
+    </div>
+
+    <div class="col-md-3">
+        Liczba widzów: @Html.DisplayFor(model => model.LiczbaWidzow)
+    </div>
+
+    <div class="col-md-3">
+        Sezon: @Html.DisplayFor(model => model.Sezon.Nazwa)
+    </div>
+</div>
+<hr />
+<div class="row belka2">
+    <div class="col-md-6 text-center">
+        <h2>@Html.DisplayFor(model => model.GospodarzKlub.Nazwa)</h2>
+        <hr />
+        <div class="pull-right"><h2 class="wynik1">@Html.DisplayFor(model => model.GolGospodarz)</h2></div>
+        @if (File.Exists(Server.MapPath("~/Images/Herby/" + Html.DisplayFor(model => model.GospodarzKlub.Herb))))
+        {
+            <a href="@Url.Action("Details", "Klubs", new { Id= Model.GospodarzKlubId})"><img src="~/Images/Herby/@Model.GospodarzKlub.Herb" alt="" class="img-responsive img-thumbnail center-block img-club" /></a>
+        }
+        else
+        {
+            <a href="@Url.Action("Details", "Klubs", new { Id= Model.GospodarzKlubId})"><img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive img-club-no img-thumbnail center-block" /></a>
+        }
+    </div>
+    <div class="col-md-6 text-center">
+        <h2>@Html.DisplayFor(model => model.GoscKlub.Nazwa)</h2>
+        <hr />
+        <div class="pull-left"><h2 class="wynik">@Html.DisplayFor(model => model.GolGosc)</h2></div>
+        @if (File.Exists(Server.MapPath("~/Images/Herby/" + Html.DisplayFor(model => model.GoscKlub.Herb))))
+        {
+            <a href="@Url.Action("Details", "Klubs", new { Id= Model.GoscKlubId})"><img src="~/Images/Herby/@Model.GoscKlub.Herb" alt="" class="img-responsive img-thumbnail center-block img-club" /></a>
+        }
+        else
+        {
+            <a href="@Url.Action("Details", "Klubs", new { Id= Model.GoscKlubId})"><img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive img-club-no img-thumbnail center-block" /></a>
+        }
+
+    </div>
+</div>
+
+<hr/>
+
+@{
+    IEnumerable<jScore3.Models.Pozycja> pozycjee = Model.Pozycje;
+    Html.RenderPartial("~/Views/Pozycjas/_Pozycjee.cshtml", pozycjee);
+}
+
+
+@*@{
+    IEnumerable<jScore3.Models.Komentarz> komentarzee = Model.Komentarze;
+    Html.RenderPartial("~/Views/Komentarzs/_Komentarze.cshtml", komentarzee);
+}*@
+
+
+@*@*<div class="form-horizontal">
+    Comments:
+    @foreach (var comment in Model.Komentarze)
+    {
+        <div class="form-group">
+            <p>@comment.Tresc</p>
+            <p>Posted by: @comment.User.UserName</p>
+        </div>
+    }
+</div>*@
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <p>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="pull-left">
+                    @Html.ActionLink("Powrót do listy", "Index", null, null, new { @class = "btn btn-warning" })
+                </div>
+                <div class="pull-right">
+                    @Html.ActionLink("Dodaj Skład", "Create", "Pozycjas", new {  Model.Pozycje }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Edytuj mecz", "Edit", null, new { id = Model.Id }, new { @class = "btn btn-info" })
+
+                </div>
+            }
+            else
+            {
+                <div class="pull-left">
+                    @Html.ActionLink("Powrót do listy", "Index", null, null, new { @class = "btn btn-warning" })
+                </div>
+            }
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+
+        </p>
+    </div>
+</div>
+
+@*<button id="btn-addCom" class="btn btn-warning">
+    Add Comment
+</button>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#btn-addCom').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("AddComment")',
+                data: {
+                    meczId : '@Model.Id'
+                },
+                success: function(result){
+                    $('#dialogContent').html(result);
+                    $('#Dialog').modal('show');
+                }
+            });
+        });
+    })
+</script>*@

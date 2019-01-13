@@ -1,0 +1,119 @@
+﻿@model IEnumerable<jScore3.Models.Mecz>
+
+@{
+    ViewBag.Title = "Mecze";
+}
+
+<div class="jumbotron myjumbotron">
+    <h2>Mecze</h2>
+    <lead>Oto lista rozegranych meczów. Aby dowiedzieć się więcej o meczu, kliknij w "Szczegóły"!</lead>
+</div>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Dodaj spotkanie", "Create", null, null, new { @class = "btn btn-success" })
+    </p>
+}
+
+@*@using (Html.BeginForm("Index", "Meczs", FormMethod.Get))
+{
+    <p>
+        Szukaj po nazwisku: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Szukaj" class="btn btn-default btn-sm" />
+    </p>
+}*@
+
+
+@{int i = 0;}
+@foreach (var item in Model)
+{
+
+    if (i % 2 == 0)
+    {
+        @:<div class="row">
+
+
+    }
+    <div class="col-md-6">
+        <div class="panel panel-default mypanel1">
+            <div class="panel-heading mypanel2">
+                <h1 class="panel-title pull-left">Kolejka @Html.DisplayFor(modelItem => item.Kolejka) - @Html.DisplayFor(modelItem => item.Data)</h1>
+                <div class="btn-group pull-right">
+
+                    @*<a href="@Url.Action("Details", "Zawodniks", new {id = item.Id})" class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Profil
+                        </a>*@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="@Url.Action("Details", "Meczs", new {id = item.Id})" class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Szczegóły meczu
+                        </a>
+                        <a href="@Url.Action("Edit", "Meczs", new {id = item.Id})" class="btn btn-info btn-xs">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edycja
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Details", "Meczs", new {id = item.Id})" class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Szczegóły meczu
+                        </a>
+                    }
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- end panel-heading -->
+            <div class="panel-body">
+          
+                <div class="row">
+                    <div class="col-lg-6 ">
+                        @if (File.Exists(Server.MapPath("~/Images/Herby/" + Html.DisplayFor(modelItem => item.GospodarzKlub.Herb))))
+                        {
+                            <a href="@Url.Action("Details", "Klubs", new { Id= item.GospodarzKlubId})"><img src="~/Images/Herby/@item.GospodarzKlub.Herb" alt="" class="img-responsive img-thumbnail center-block img-club"/></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", "Klubs", new { Id= item.GospodarzKlubId})"><img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive img-club-no img-thumbnail center-block"/></a>
+                        }
+                    </div>
+                    <div class="col-lg-6 ">
+                        @if (File.Exists(Server.MapPath("~/Images/Herby/" + Html.DisplayFor(modelItem => item.GoscKlub.Herb))))
+                        {
+                            <a href="@Url.Action("Details", "Klubs", new { Id= item.GoscKlubId})"><img src="~/Images/Herby/@item.GoscKlub.Herb" alt="" class="img-responsive img-thumbnail center-block img-club" /></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", "Klubs", new { Id= item.GoscKlubId})"><img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive img-club-no img-thumbnail center-block" /></a>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 infoklub">
+                        <p class="napis">@Html.DisplayFor(modelItem => item.GospodarzKlub.Nazwa)</p>
+                    </div>
+                    <div class="col-lg-6 infonumer">
+                        <p class="napis">@Html.DisplayFor(modelItem => item.GoscKlub.Nazwa)</p>
+                    </div>
+                    @*<div class="clearfix"></div>*@
+                    <div class="col-lg-6 infoklubContent">
+                        <p class="napis">@Html.DisplayFor(modelItem => item.GolGospodarz)</p>
+                    
+                    </div>
+                    <div class="col-lg-6 infoklubContent">
+                        <p class="numerkoszulki">@Html.DisplayFor(modelItem => item.GolGosc)</p>
+                    </div>
+                </div>
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel-primary -->
+    </div>
+    if (i % 2 == 1)
+    {
+        
+        @:</div>
+    }
+
+    i++;
+}
+<div class="clearfix"></div>
+

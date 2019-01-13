@@ -1,0 +1,100 @@
+﻿@using jScore3.Models
+@model IEnumerable<dynamic>
+
+@if (Model.Any() == true)
+{
+    <div class="row myrow">
+        <h3 class="skladybg">Skład gospodarzy:</h3>
+        @foreach (dynamic item in Model)
+        {
+
+
+
+            if (item.Mecz.GospodarzKlubId == item.Zawodnik.KlubId)
+            {
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @item.Nazwa
+                        </dt>
+
+                        <dd>
+                            
+                            <a href="@Url.Action("Details", "Zawodniks", new {Id = item.Zawodnik.Id})">
+                                @item.Zawodnik.Imie @item.Zawodnik.Nazwisko</a>
+                            @*<a href="@Url.Action("Details", "Zawodniks", new {id = item.Zawodnik.Id})" class="btn btn-warning btn-xs pull" style="font-size: 10px;">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </a>*@
+                           
+                            <div class="skladyzdj ">
+                                @if (File.Exists(Server.MapPath("~/Images/Zawodnicy/" + @item.Zawodnik.Zdjecie)))
+                                {
+                                    <a href="@Url.Action("Details", "Zawodniks", new {Id = item.Zawodnik.Id})"><img src="~/Images/Zawodnicy/@item.Zawodnik.Zdjecie" alt="" class="img-responsive center-block"/></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Details", "Zawodniks", new {Id = item.Zawodnik.Id})"><img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive"/></a>
+                                }
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+
+            }
+
+        }
+    </div>
+  
+
+
+    <div class="row myrow2">
+        <h3 class="skladybg">Skład gości:</h3>
+        @foreach (dynamic item in Model)
+        {
+            if (item.Mecz.GoscKlubId == item.Zawodnik.KlubId)
+            {
+
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            
+                            @item.Nazwa
+                        </dt>
+
+                        <dd>
+
+                            <a href="@Url.Action("Details", "Zawodniks", new {Id = item.Zawodnik.Id})">
+                                @item.Zawodnik.Imie @item.Zawodnik.Nazwisko
+                            </a>
+                            @*<a href="@Url.Action("Details", "Zawodniks", new {id = item.Zawodnik.Id})" class="btn btn-warning btn-xs pull" style="font-size: 10px;">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                </a>*@
+
+                            <div class="skladyzdj ">
+                                @if (File.Exists(Server.MapPath("~/Images/Zawodnicy/" + @item.Zawodnik.Zdjecie)))
+                                {
+                                    <a href="@Url.Action("Details", "Zawodniks", new {Id = item.Zawodnik.Id})"><img src="~/Images/Zawodnicy/@item.Zawodnik.Zdjecie" alt="" class="img-responsive center-block" /></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Details", "Zawodniks", new {Id = item.Zawodnik.Id})"><img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive" /></a>
+                                }
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            }
+        }
+    </div>
+
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12 text-center">
+            Brak informacji o składach
+        </div>
+    </div>
+}
+
+

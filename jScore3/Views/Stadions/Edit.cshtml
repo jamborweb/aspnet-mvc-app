@@ -1,0 +1,94 @@
+﻿@model jScore3.Models.Stadion
+
+@{
+    ViewBag.Title = "Edycja";
+}
+
+<div class="jumbotron myjumbotron">
+    <h2>@ViewData.Model.Nazwa</h2>
+</div>
+
+<div class="row">
+    @using (Html.BeginForm("Edit", "Stadions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="col-lg-7">
+            <div class="form-horizontal">
+                <h4>Edycja Stadionu</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nazwa, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nazwa, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nazwa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Pojemnosc, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Pojemnosc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Pojemnosc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Miasto, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Miasto, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Miasto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Zdjecie, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Zdjecie, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Zdjecie, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>*@
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Zdjecie, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" name="zdjecieStadion" />
+                        @Html.ValidationMessageFor(model => model.Zdjecie, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+      
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Zapisz zmiany" class="btn btn-success btn-warning-my" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <h4>Aktualne Zdjęcie</h4>
+            <hr />
+            @if (File.Exists(Server.MapPath("~/Images/" + Html.DisplayFor(model => model.Zdjecie))))
+            {
+                <img src="~/Images/@Model.Zdjecie" alt="" class="img-responsive" />
+            }
+            else
+            {
+                <img src="~/Images/noimage.jpg" alt="Brak zdjecia" class="img-responsive" />
+            }
+        </div>
+
+    }
+</div>
+
+<div>
+    @Html.ActionLink("Powrót do listy", "Index", null, null, new { @class = "btn btn-warning" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

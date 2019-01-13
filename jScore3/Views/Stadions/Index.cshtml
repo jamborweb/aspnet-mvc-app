@@ -1,0 +1,72 @@
+﻿@model IEnumerable<jScore3.Models.Stadion>
+
+@{
+    ViewBag.Title = "Stadiony";
+}
+
+<div class="jumbotron myjumbotron">
+    <h2>Stadiony</h2>
+    <lead>Oto lista naszych stadionów. Aby dowiedzieć się więcej, kliknij w "Szczegóły"!</lead>
+</div>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Dodaj nowy", "Create", null, null, new { @class = "btn btn-success" })
+    </p>
+}
+<table class="table table-striped">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Zdjecie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pojemnosc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Miasto)
+        </th>
+        <th class="text-center">Profil stadionu</th>
+    </tr>
+
+
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td class="text-center">
+                <a href="@Url.Action("Details", "Stadions", new { Id= item.Id})"><img src="~/Images/@item.Zdjecie" alt="" height="50" width="50" class="img-circle" /></a>
+            </td>
+            <td class="vert">
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pojemnosc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Miasto)
+            </td>
+
+            @if (User.IsInRole("Admin"))
+                {
+                <td class="text-center">
+
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }, new { @class = "btn btn-warning" }) |
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            }
+            else
+            {
+                <td>
+                    @*@Html.ActionLink("Szczegóły", "Details", new { id = item.Id })*@
+                    @Html.ActionLink("Szczegóły", "Details", null, new { id = item.Id }, new { @class = "btn btn-warning btn-warning-my" })
+                </td>
+            }
+        </tr>
+    }
+
+</table>

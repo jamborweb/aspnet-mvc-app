@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Style/custom.css")
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <img src="~/Images/header.jpg" class="img-responsive" />
+        </div>
+    </div>
+
+<div class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("jScore - Serwis informacji piłkarskich", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
+                <li>@Html.ActionLink("Kluby", "Index", "Klubs")</li>
+                <li>@Html.ActionLink("Mecze", "Index", "Meczs")</li>
+                <li>@Html.ActionLink("Zawodnicy", "Index", "Zawodniks")</li>
+                <li>@Html.ActionLink("Stadiony", "Index", "Stadions")</li>
+                @*<li>@Html.ActionLink("Sezony", "Index", "Sezons")</li>*@
+                <li>@Html.ActionLink("Kontakt", "Index", "Email")</li>
+                @*<li>@Html.ActionLink("Pozycje", "Index", "Pozycjas")</li>*@
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
+
+@*<div class="container-fluid">
+    <div class="row">
+        <img src="~/Images/header.jpg" class="img-responsive"/>
+    </div>
+</div>*@
+
+<div class="container body-content">
+    @RenderBody()
+
+
+
+    <footer class="text-center">
+        <hr/>
+        <p>jScore &copy; @DateTime.Now.Year - Bartosz Jamborski. Wszelkie prawa zastrzeżone!</p>
+    </footer>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+</body>
+</html>

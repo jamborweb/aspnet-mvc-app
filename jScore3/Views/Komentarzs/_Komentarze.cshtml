@@ -1,0 +1,92 @@
+﻿@model IEnumerable<dynamic>
+
+<h3>Komentarze</h3>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+<script>
+
+    function Postcomment() {
+        var txtcomment = $("#txtComment").val();
+        //var txtmeczId = $("#txtMeczId").val();
+
+        $("#btnValidate").val("Please wait....");
+        $.ajax({
+            method: "POST",
+            url: '@Url.Action("SaveComment", "Komentarzs")',
+            data: {
+                comment: txtcomment,
+                meczId: '@ViewBag.Mecze.Id'
+    }
+            })
+            .done(function(msg) {
+                if (msg == 1) {
+                    $("#divMessage").html("Kometarz dodany poprawnie!");
+                    //getcomment
+                } else {
+                    $("#divMessage").html("ERROR");
+                }
+
+                $("#btnValidate").val("Post Comment");
+            });
+    }
+
+    //$(document).ready(function() {
+    //    $("#divloadingcomment").html()
+    //});
+
+
+</script>
+
+@using (Html.BeginForm("_Komentarze", "Komentarzs"))
+{
+    <table width="100%" cellpadding="5" cellspacing="2" border="0">
+        <tr>
+            <td colspan="2">
+                <div id="divMessage" style="color:red; font-weight:bold;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Comment : </td>
+            <td>@Html.TextArea("comment", "", new { @Id = "txtComment" })</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <input type="button" value="Post Comment" id="btnValidate" onclick="javascript: Postcomment();" />
+            </td>
+        </tr>
+    </table>
+
+}
+
+
+
+
+@*<ul>
+    
+    @if (Model.Any() == true)
+    {
+        foreach(dynamic item in Model)
+        {
+
+
+            <li>@item.Tresc</li>
+            <div class="AddComment" style="margin-left: 30%;  margin-bottom: 5px; margin-top: 8px;">  
+                <input type="text" id="@string.Format("{0}_{1}", "comment", item.Id)" class="form-control"  placeholder="Add a Comment ..."  style="display: inline;" />  
+                <button type="button" class="btn btn-default addComment" data-id="@item.Id"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>  
+            </div>  
+        }
+
+
+
+    }
+    else
+    {
+        <p>Brak komentarzy</p>
+    }
+
+</ul>*@
+
+
+
+
+

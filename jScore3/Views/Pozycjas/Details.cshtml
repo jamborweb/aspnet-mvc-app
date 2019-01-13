@@ -1,0 +1,50 @@
+﻿@model jScore3.Models.Pozycja
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pozycja</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Klub.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Klub.Nazwa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mecz.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mecz.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zawodnik.Imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zawodnik.Imie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nazwa)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
