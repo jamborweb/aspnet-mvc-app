@@ -16,3 +16,8 @@ jScore is a ASP.NET MVC5 application which presents data about sports clubs, sta
 ### Sample screens of this application: ###
 
 ![picture alt](https://i.ibb.co/bQZSVgK/Screenshot-2019-01-123.png "optional")
+![picture alt](https://i.ibb.co/6bmDHZR/Screenshot-2019-01-125.png "optional")
+![picture alt](https://i.ibb.co/Rv5qb2r/Screenshot-2019-01-122.png "optional")
+![picture alt](hhttps://i.ibb.co/NxW2dt9/Screenshot-2019-01-124.png "optional")
+![picture alt](https://i.ibb.co/pL8twGj/Screenshot-2019-01-12.png "optional")
+
